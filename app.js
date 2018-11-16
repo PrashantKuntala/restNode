@@ -12,6 +12,7 @@ const mongoose = require('mongoose');
 
 // connecting to mongodb using mongoclient 
 mongoose.connect('mongodb://localhost/restTest',{ useNewUrlParser: true });
+mongoose.Promise = global.Promise;
 
 // adding (middle-ware)response headers to handle CORS
 app.use((req,res,next)=> {

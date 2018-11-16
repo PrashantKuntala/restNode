@@ -1,29 +1,38 @@
-#### REST API using Node
+## REST API using Node
 ---
 
-Simple implementation of REST API using Node and Express
+Simple implementation of REST API using Node and Express.
 
-> **Mongodb need to be properly setup on your machine, before cloning and running the app**
+**_Mongodb need to be properly setup on your machine, before cloning and running the app_**
 
-#### Usage
----
+### Usage
 
 - `git clone https://github.com/PrashantKuntala/restNode.git`
 - `npm install`
 - `npm start`
 
-#### API Details
----
+### API Details
+
 | Endpoint      | Supported HTTP Verbs     | Description                         |
 |---------------|--------------------------|-------------------------------------|
 |`/samples`     | GET, POST                | Retrieve all the available samples. |
-|`/samples/{id}`| GET, POST, PATCH, DELETE | Retrieve sample using sampleID.     |   
+|`/samples/{id}`| GET, PATCH, DELETE       | Retrieve sample using sampleID.     |   
 
-#### Package Info
----
+
+- Updating samples need to be in this format
+
+```
+[
+	{"propName": "assayType","value" : "ChIP-seq"},
+	{"propName": "sampleName","value" : "SSL1"}
+]
+```
+
+### Packages Used
+
 - express
 - body-parser
 - morgan
 - mongoose
 
-> **go to npmjs.com for more details on the above packages**
+**_go to npmjs.com for more details on the above packages_**

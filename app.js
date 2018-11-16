@@ -1,8 +1,29 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 
 // adding loggin middleware
 const morgan = require('morgan');
+
+// adding body-parser
+const bodyParser = require('body-parser');
+
+// adding mongoose ORM for mongodb
+const mongoose = require('mongoose');
+
+// connecting to mongodb using mongoclient 
+mongoose.connect('mongodb://localhost/restTest',{ useNewUrlParser: true });
+
+// adding (middle-ware)response headers to handle CORS
+app.use((req,res,next)=> {
+    res.header('Access-Control-Allow-Origin','*');
+    res.header('Access-Control-Allow-Headers','Origin, X-Requested-With,Content-Type,Accept,Authorization');
+    if (req.method === 'OPTIONS') {
+        res.header('Access-Control-Allow-Methods','PUT, POST, PATCH, DELETE, GET');
+        res.status(200).json({});
+    }
+    next();
+});
+
 
 // add routes
 const sampleRoutes = require('./routes/samples');
@@ -10,6 +31,10 @@ const newRoutes = require('./routes/news');
 
 // adding the logger
 app.use(morgan('dev'));
+
+// adding the body-parser to handle request bodies
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 // let express use the specific routes
 app.use('/samples',sampleRoutes);

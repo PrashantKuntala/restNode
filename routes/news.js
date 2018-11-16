@@ -9,10 +9,18 @@ router.get('/', (req, res, next) =>{
     });
 });
 
-router.post('/', (req, res, next) =>{
+router.post('/', (req, res, next) => {
+
+    // creating a news object from the request
+    const newsItem = {
+        date : req.body.date,
+        news : req.body.news
+    }
+
     res.status(201).json({
         message : 'Handling POST requests to /news',
-        Info : 'posted latest news'
+        Info : 'posted latest news',
+        created : newsItem
     });
 });
 

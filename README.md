@@ -3,12 +3,14 @@
 
 Simple implementation of REST API using Node and Express
 
+> **Mongodb need to be properly setup on your machine, before cloning and running the app**
+
 #### Usage
 ---
 
-- git clone
-- npm install
-- npm start
+- `git clone https://github.com/PrashantKuntala/restNode.git`
+- `npm install`
+- `npm start`
 
 #### API Details
 ---
@@ -16,3 +18,12 @@ Simple implementation of REST API using Node and Express
 |---------------|--------------------------|-------------------------------------|
 |`/samples`     | GET, POST                | Retrieve all the available samples. |
 |`/samples/{id}`| GET, POST, PATCH, DELETE | Retrieve sample using sampleID.     |   
+
+#### Package Info
+---
+- express
+- body-parser
+- morgan
+- mongoose
+
+> **go to npmjs.com for more details on the above packages**

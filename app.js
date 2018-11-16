@@ -1,11 +1,12 @@
 var express = require('express');
 var app = express();
 
-app.use((req,res,next) => {
-    res.status(200).json({
-        message : "It works"
-    });
-});
+// add routes
+const sampleRoutes = require('./routes/samples');
+const newRoutes = require('./routes/news');
+
+app.use('/samples',sampleRoutes);
+app.use('/news',newRoutes);
 
 //listen to port
 app.listen(8080);

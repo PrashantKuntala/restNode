@@ -3,14 +3,14 @@
 
 Simple implementation of REST API using Node and Express
 
-### Usage
+#### Usage
 ---
 
 - git clone
 - npm install
 - npm app
 
-### API Details
+#### API Details
 ---
 | Endpoint      | Supported HTTP Verbs     | Description                         |
 |---------------|--------------------------|-------------------------------------|

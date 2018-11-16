@@ -8,7 +8,7 @@ Simple implementation of REST API using Node and Express
 
 - git clone
 - npm install
-- npm app
+- npm start
 
 #### API Details
 ---

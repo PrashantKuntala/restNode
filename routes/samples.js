@@ -10,7 +10,7 @@ const getURL = 'http://localhost:8080/samples/';
 // GET all samples
 router.get('/', (req, res, next) =>{
     Sample.find()
-    .select('sampleId sampleName assayType') // returns only those field names from db
+    // .select('sampleId sampleName assayType') // returns only those field names from db
     .exec()
     .then(docs => {
         console.log(docs);
@@ -19,13 +19,39 @@ router.get('/', (req, res, next) =>{
             samples : docs.map(doc => {
                 return {
                     _id : doc._id,
+                    isPublic:doc.isPublic,
+                    featureName: doc.featureName,
+                    standardGeneName: doc.standardGeneName,
+                    commonName: doc.commonName,
+                    sgdId: doc.sgdId,
+                    alias: doc.alias,
+                    description: doc.description,
+                    featureType: doc.featureType,
+                    featureQualifier: doc.featureQualifier,
+                    isMergedReplicate: doc.isMergedReplicate,
                     sampleId : doc.sampleId,
-                    sampleName : doc.sampleName,
+                    runId : doc.runId,
+                    genome : doc.genome,
                     assayType : doc.assayType,
+                    peaks : doc.peaks,
+                    motifCount : doc.motifCount,
+                    epitopeTag : doc.epitopeTag,
+                    treatment : doc.treatment,
+                    growthMedia : doc.growthMedia,
+                    antibody : doc.antibody,
+                    mappedReads : doc.mappedReads,
+                    totalReads : doc.totalReads,
+                    dedupUniquelyMappedReads : doc.dedupUniquelyMappedReads,
+                    mappedPercent: doc.mappedPercent,
+                    uniquelyMappedPercent : doc.uniquelyMappedPercent,
+                    codingImages: doc.codingImages,
+                    nonCodingImages: doc.nonCodingImages,
+                    motifImages: doc.motifImages,
                     request:{
                         type : 'GET',
                         url:  getURL + doc._id
                     }
+                    // doc: doc
                 }
             })            
         }
@@ -51,9 +77,34 @@ router.post('/', (req, res, next) =>{
     // creating a new object for sample
     const sample = new Sample({
         _id: new mongoose.Types.ObjectId(),
+        featureName: req.body.featureName,
+        standardGeneName: req.body.standardGeneName,
+        commonName: req.body.commonName,
+        sgdId: req.body.sgdId,
+        alias: req.body.alias,
+        description: req.body.description,
+        featureType: req.body.featureType,
+        featureQualifier: req.body.featureQualifier,
+        isMergedReplicate: req.body.isMergedReplicate,
         sampleId : req.body.sampleId,
-        sampleName : req.body.sampleName,
-        assayType : req.body.assayType
+        runId : req.body.runId,
+        genome : req.body.genome,
+        assayType : req.body.assayType,
+        peaks : req.body.peaks,
+        motifCount : req.body.motifCount,
+        epitopeTag : req.body.epitopeTag,
+        treatments : req.body.treatments,
+        growthMedia : req.body.growthMedia,
+        antibody : req.body.antibody,
+        mappedReads : req.body.mappedReads,
+        totalReads : req.body.totalReads,
+        dedupUniquelyMappedReads : req.body.dedupUniquelyMappedReads,
+        dedupPercent: req.body.dedupPercent,
+        mappedPercent: req.body.mappedPercent,
+        uniquelyMappedPercent : req.body.uniquelyMappedPercent,
+        codingImages: req.body.codingImages,
+        nonCodingImages: req.body.nonCodingImages,
+        motifImages: req.body.motifImages,
     });
     // saving the item into the database using promises
     sample.save().then( result => {
@@ -62,9 +113,34 @@ router.post('/', (req, res, next) =>{
             message : 'Created the sample',
             sample : {
                 _id : result._id,
+                isPublic:result.isPublic,
+                featureName: result.featureName,
+                standardGeneName: result.standardGeneName,
+                commonName: result.commonName,
+                sgdId: result.sgdId,
+                alias: result.alias,
+                description: result.description,
+                featureType: result.featureType,
+                featureQualifier: result.featureQualifier,
+                isMergedReplicate: result.isMergedReplicate,
                 sampleId : result.sampleId,
-                sampleName : result.sampleName,
+                runId : result.runId,
+                genome : result.genome,
                 assayType : result.assayType,
+                peaks : result.peaks,
+                motifCount : result.motifCount,
+                epitopeTag : result.epitopeTag,
+                treatment : result.treatment,
+                growthMedia : result.growthMedia,
+                antibody : result.antibody,
+                mappedReads : result.mappedReads,
+                totalReads : result.totalReads,
+                dedupUniquelyMappedReads : result.dedupUniquelyMappedReads,
+                mappedPercent: result.mappedPercent,
+                uniquelyMappedPercent : result.uniquelyMappedPercent,
+                codingImages: result.codingImages,
+                nonCodingImages: result.nonCodingImages,
+                motifImages: result.motifImages,
                 request:{
                     type : 'GET',
                     url:  getURL + result._id
@@ -80,7 +156,7 @@ router.post('/', (req, res, next) =>{
 router.get('/:sampleId', (req, res, next) =>{
     const id =  req.params.sampleId;
     Sample.findById(id)
-    .select('sampleId sampleName assayType')
+    // .select('sampleId standardGeneName assayType')
     .exec()
     .then(doc => {
         console.log("from Database \n",doc);

@@ -9,7 +9,7 @@ const getURL = 'http://localhost:8080/samples/';
 
 // GET all samples
 router.get('/', (req, res, next) =>{
-    Sample.find()
+    Sample.find({"isPublic" :  true})
     // .select('sampleId sampleName assayType') // returns only those field names from db
     .exec()
     .then(docs => {
@@ -19,7 +19,7 @@ router.get('/', (req, res, next) =>{
             samples : docs.map(doc => {
                 return {
                     _id : doc._id,
-                    isPublic:doc.isPublic,
+                    // isPublic:doc.isPublic, // send only the public datasets 
                     featureName: doc.featureName,
                     standardGeneName: doc.standardGeneName,
                     commonName: doc.commonName,

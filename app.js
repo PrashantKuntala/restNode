@@ -28,7 +28,6 @@ app.use((req,res,next)=> {
 
 // add routes
 const sampleRoutes = require('./routes/samples');
-const newRoutes = require('./routes/news');
 
 // adding the logger
 app.use(morgan('dev'));
@@ -39,7 +38,7 @@ app.use(bodyParser.json());
 
 // let express use the specific routes
 app.use('/samples',sampleRoutes);
-app.use('/news',newRoutes);
+
 
 // handling default route errors
 app.use((req,res,next) => {

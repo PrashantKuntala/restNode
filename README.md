@@ -14,9 +14,14 @@ Simple implementation of REST API using Node and Express.
 
 | Endpoint      | Supported HTTP Verbs     | Description                         |
 |---------------|--------------------------|-------------------------------------|
-|`/samples`     | GET, POST                | Retrieve all the available samples. |
-|`/samples/{id}`| GET, PATCH, DELETE       | Retrieve sample using sampleID.     |   
-
+|`/samples`     | GET                      | Retrieve all the public samples. |
+|`/samples/{proteinName}`| GET             | Retrieve sample using proteinName.  |
+|`/reviewSamples`| GET            | Retrieve all samples, both private & public.  |
+|`/reviewSamples`| POST               | Submit all samples.  | 
+|`/reviewSamples/{proteinName}`| GET             | Retrieve sample using proteinName.  |    
+|`/reviewSamples/{sampleId}`| POST             | Submit sample using sampleId.  | 
+|`/reviewSamples/{sampleId}`| PATCH             | Used to make a sample public.  | 
+|`/reviewSamples/{sampleId}`| DELETE             | Delete a sample using sampleId.  | 
 
 - Updating samples using the `PATCH` request need to be in this format
 

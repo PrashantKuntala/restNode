@@ -33,6 +33,9 @@ app.use((req,res,next)=> {
 const sampleRoutes = require('./routes/samples');
 const reviewSampleRoutes = require('./routes/reviewSamples');
 
+// adding static resources 
+app.use('/images',express.static('/Users/shantu/Desktop/Projects/YEP/images'));
+
 // adding helmet
 app.use(helmet());
 

@@ -35,7 +35,9 @@ Simple implementation of REST API using Node and Express.
 
 - Adding samples using the `POST` request need to be in this format
 
-> By default the samples are not public, use `PATCH` to make them public after review
+> All image urls are prefixed by hostname and port number, based on where the API is setup. Make sure while sending `POST` requests for new samples the image urls doesn't start with `/`
+>
+> By default the samples are not public, use `PATCH` to make them public after review.
 
 ```
 {
@@ -65,21 +67,21 @@ Simple implementation of REST API using Node and Express.
 	"runId" : 231,
 	"antibody" : "i5006",
     "isMergedReplicate" : false,
-    "codingImages": [{"url":"http://pluto.vmhost.psu.edu:8080/data/BoundFeatures/12467_Reb1_Bound_Features.png","type":"boundFeatures","category":"chexmix"},
-    {"url":"http://pluto.vmhost.psu.edu:8080/data/BoundFeatures/12467_Reb1_All_Features.png","region":"allFeatures","category":"chexmix"},
-     {"url":"http://pluto.vmhost.psu.edu:8080/data/NFR/12467_Reb1_NFR_Heatmap.png","region":"NFR_heatmap","category":"chexmix"},
-     {"url":"http://pluto.vmhost.psu.edu:8080/data/NFR/12467_Reb1_NFR_Composite.png","region":"NFR_composite","category":"chexmix"}],
+    "codingImages": [{"url":"BoundFeatures/12467_Reb1_Bound_Features.png","type":"boundFeatures","category":"chexmix"},
+    {"url":"BoundFeatures/12467_Reb1_All_Features.png","region":"allFeatures","category":"chexmix"},
+     {"url":"NFR/12467_Reb1_NFR_Heatmap.png","region":"NFR_heatmap","category":"chexmix"},
+     {"url":"NFR/12467_Reb1_NFR_Composite.png","region":"NFR_composite","category":"chexmix"}],
     "nonCodingImages": [
-        {"url":"http://pluto.vmhost.psu.edu:8080/data/CUT/12467_Reb1_CUT_Heatmap.png","region":"cut","category":"chexmix"},
-        {"url":"http://pluto.vmhost.psu.edu:8080/data/SUT/12467_Reb1_SUT_Heatmap.png","region":"sut","category":"chexmix"},
-        {"url":"http://pluto.vmhost.psu.edu:8080/data/XUT/12467_Reb1_XUT_Heatmap.png","region":"xut","category":"chexmix"}
+        {"url":"CUT/12467_Reb1_CUT_Heatmap.png","region":"cut","category":"chexmix"},
+        {"url":"SUT/12467_Reb1_SUT_Heatmap.png","region":"sut","category":"chexmix"},
+        {"url":"XUT/12467_Reb1_XUT_Heatmap.png","region":"xut","category":"chexmix"}
     ],
      "motifImages": [
- {"url":"http://pluto.vmhost.psu.edu:8080/data/Meme/12467_Reb1_memelogos/logo1.png","region":"logoforward","category":"Motif1"},
- {"url":"http://pluto.vmhost.psu.edu:8080/data/Meme/12467_Reb1_memelogos/logo_rc1.png","region":"logoreverse","category":"Motif1"},
-  {"url":"http://pluto.vmhost.psu.edu:8080/data/Meme/12467_Reb1_Motif_1_fourcolor.png","region":"fourcolor","category":"Motif1"},
-   {"url":"http://pluto.vmhost.psu.edu:8080/data/Meme/12467_Reb1_Motif_1_composite.png","region":"composite","category":"Motif1"},
-    {"url":"http://pluto.vmhost.psu.edu:8080/data/Meme/12467_Reb1_Motif_1_Heatmap.png","region":"heatmap","category":"Motif1"}
+ {"url":"Meme/12467_Reb1_memelogos/logo1.png","region":"logoforward","category":"Motif1"},
+ {"url":"Meme/12467_Reb1_memelogos/logo_rc1.png","region":"logoreverse","category":"Motif1"},
+  {"url":"Meme/12467_Reb1_Motif_1_fourcolor.png","region":"fourcolor","category":"Motif1"},
+   {"url":"Meme/12467_Reb1_Motif_1_composite.png","region":"composite","category":"Motif1"},
+    {"url":"Meme/12467_Reb1_Motif_1_Heatmap.png","region":"heatmap","category":"Motif1"}
      ]
 }
 

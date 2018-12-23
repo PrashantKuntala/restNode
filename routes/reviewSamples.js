@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 // requiring the samples model
 const Sample = require('../models/sampleModel');
 const getURL = 'http://localhost:8080/samples/';
-
+const imageURL = 'http://localhost:8080/images/';
 
 // GET all samples
 router.get('/', (req, res, next) =>{
@@ -74,6 +74,33 @@ router.get('/', (req, res, next) =>{
 // maybe you need to use map if there is more than one sample
 // remember the user doesn't send the id
 router.post('/', (req, res, next) =>{
+
+    // append the hosturl to the image urls
+    let codingImageUrl = req.body.codingImages.map(item => {
+        return {
+            url: imageURL+item.url,
+            region: item.region,
+            category: item.category
+        }
+    })
+
+    let nonCodingImageUrl = req.body.nonCodingImages.map(item => {
+        return {
+            url: imageURL+item.url,
+            region: item.region,
+            category: item.category
+        }
+    })
+
+    let motifImageUrl = req.body.motifImages.map(item => {
+        return {
+            url: imageURL+item.url,
+            region: item.region,
+            category: item.category
+        }
+    })
+    
+
     // creating a new object for sample
     const sample = new Sample({
         _id: new mongoose.Types.ObjectId(),
@@ -102,9 +129,9 @@ router.post('/', (req, res, next) =>{
         dedupPercent: req.body.dedupPercent,
         mappedPercent: req.body.mappedPercent,
         uniquelyMappedPercent : req.body.uniquelyMappedPercent,
-        codingImages: req.body.codingImages,
-        nonCodingImages: req.body.nonCodingImages,
-        motifImages: req.body.motifImages,
+        codingImages: codingImageUrl,
+        nonCodingImages: nonCodingImageUrl,
+        motifImages: motifImageUrl,
     });
     // saving the item into the database using promises
     sample.save().then( result => {
@@ -221,7 +248,7 @@ router.get('/:proteinName', (req, res, next) =>{
 router.post('/:sampleId', (req, res, next) =>{
     res.status(201).json({
         message : 'Handling POST requests to /samples/:sampleId',
-        Info : 'Posted Sample'
+        Info : 'Posted Sample, under construction'
     });
 });
 
@@ -252,7 +279,7 @@ router.patch('/:sampleId', (req, res, next) =>{
             sample : result,
             request :{
                 type: 'GET',
-                url : getURL + id
+                url : getURL
             }            
         });      
     }).catch(err => {

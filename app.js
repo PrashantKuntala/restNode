@@ -7,6 +7,9 @@ const morgan = require('morgan');
 // adding body-parser
 const bodyParser = require('body-parser');
 
+// adding helmet for security
+const helmet = require('helmet');
+
 // adding mongoose ORM for mongodb
 const mongoose = require('mongoose');
 
@@ -29,6 +32,9 @@ app.use((req,res,next)=> {
 // add routes
 const sampleRoutes = require('./routes/samples');
 const reviewSampleRoutes = require('./routes/reviewSamples');
+
+// adding helmet
+app.use(helmet());
 
 // adding the logger
 app.use(morgan('dev'));

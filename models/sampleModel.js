@@ -19,7 +19,7 @@ const sampleSchema = mongoose.Schema({
     runId : {type:Number, required : true},
     genome : {type:String, required : true},
     assayType : {type:String, required : true},
-    peaks : {type:Number, required : true},
+    peaks : {type:String, required : true},
     motifCount : {type:Number, required : true},
     epitopeTag : {type:String,required: true},
     treatments : {type:String, required : true},

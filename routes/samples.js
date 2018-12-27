@@ -40,7 +40,7 @@ router.get('/', (req, res, next) =>{
                     peaks : doc.peaks,
                     motifCount : doc.motifCount,
                     epitopeTag : doc.epitopeTag,
-                    treatment : doc.treatment,
+                    treatments : doc.treatments,
                     growthMedia : doc.growthMedia,
                     antibody : doc.antibody,
                     mappedReads : doc.mappedReads,

@@ -36,7 +36,7 @@ router.get('/', (req, res, next) =>{
                     peaks : doc.peaks,
                     motifCount : doc.motifCount,
                     epitopeTag : doc.epitopeTag,
-                    treatment : doc.treatment,
+                    treatments : doc.treatments,
                     growthMedia : doc.growthMedia,
                     antibody : doc.antibody,
                     mappedReads : doc.mappedReads,
@@ -74,7 +74,7 @@ router.get('/', (req, res, next) =>{
 // maybe you need to use map if there is more than one sample
 // remember the user doesn't send the id
 router.post('/', (req, res, next) =>{
-
+   
     // append the hosturl to the image urls
     let codingImageUrl = req.body.codingImages.map(item => {
         return {
@@ -135,7 +135,7 @@ router.post('/', (req, res, next) =>{
     });
     // saving the item into the database using promises
     sample.save().then( result => {
-        console.log(result); 
+        // console.log(result); 
         res.status(201).json({
             message : 'Created the sample',
             sample : {
@@ -157,7 +157,7 @@ router.post('/', (req, res, next) =>{
                 peaks : result.peaks,
                 motifCount : result.motifCount,
                 epitopeTag : result.epitopeTag,
-                treatment : result.treatment,
+                treatments : result.treatments,
                 growthMedia : result.growthMedia,
                 antibody : result.antibody,
                 mappedReads : result.mappedReads,

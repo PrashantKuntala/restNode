@@ -69,6 +69,16 @@ const sampleSchema = mongoose.Schema({
         motif1FourColor: String,
         motif1Composite: String,
         motif1Heatmap:String,
+        motif2Logo:String,
+        motif2LogoReverse: String,
+        motif2FourColor: String,
+        motif2Composite: String,
+        motif2Heatmap:String,
+        motif3Logo:String,
+        motif3LogoReverse: String,
+        motif3FourColor: String,
+        motif3Composite: String,
+        motif3Heatmap:String,
     }],
 });
 

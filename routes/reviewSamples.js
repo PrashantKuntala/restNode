@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 
 // requiring the samples model
 const Sample = require('../models/sampleModel');
-const getURL = 'http://localhost:8080/samples/';
-const imageURL = 'http://localhost:8080/images/';
+const getURL = 'http://172.29.0.74:8080/samples/';
+const imageURL = 'http://172.29.0.74:8080/images/';
 
 // GET all samples
 router.get('/', (req, res, next) =>{

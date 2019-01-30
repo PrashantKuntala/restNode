@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 // requiring the samples model
 const Sample = require('../models/sampleModel');
-const getURL = 'http://172.29.0.74:8080/samples/';
+const getURL = 'http://172.29.0.74:8080/reviewSamples/';
 const imageURL = 'http://172.29.0.74:8080/images/';
 
 // GET all samples
@@ -259,6 +259,148 @@ router.post('/', (req, res, next) =>{
 router.get('/:proteinName', (req, res, next) =>{
     const proteinName =  req.params.proteinName.toUpperCase();
     Sample.find({'standardGeneName':proteinName})
+    // .select('sampleId standardGeneName assayType')
+    .exec()
+    .then(docs => {
+        console.log("from Database \n",docs);
+        // if the document is not null then send the doc
+        if (docs.length > 0){
+            res.status(200).json({
+                count : docs.length,
+                samples : docs.map(doc => {
+            
+                    // appending the server prefix to each image
+                    let codingImageUrl = doc.codingImages.map(item => {
+                        return {
+                            allFeaturesHeatmap: imageURL+item.allFeaturesHeatmap,
+                            allFeaturesColorbar: imageURL+item.allFeaturesColorbar,
+                            boundFeaturesHeatmap: imageURL+item.boundFeaturesHeatmap,
+                            boundFeaturesColorbar:imageURL+item.boundFeaturesColorbar,
+                            enrichedFeaturesHeatmap:imageURL+item.enrichedFeaturesHeatmap,
+                            enrichedFeaturesColorbar:imageURL+item.enrichedFeaturesColorbar,
+                            nfrComposite:imageURL+item.nfrComposite,
+                            nfrHeatmap:imageURL+item.nfrHeatmap,
+                            nfrEnrichedHeatmap:imageURL+item.nfrEnrichedHeatmap,
+                            nfrEnrichedComposite:imageURL+item.nfrEnrichedComposite,
+                            tssComposite:imageURL+item.tssComposite,
+                            tssHeatmap:imageURL+item.tssHeatmap,
+                            tssEnrichedHeatmap:imageURL+item.tssEnrichedHeatmap,
+                            tssEnrichedComposite:imageURL+item.tssEnrichedComposite,
+                            tesComposite:imageURL+item.tesComposite,
+                            tesHeatmap:imageURL+item.tesHeatmap,
+                            tesEnrichedHeatmap:imageURL+item.tesEnrichedHeatmap,
+                            tesEnrichedComposite:imageURL+item.tesEnrichedComposite,
+                        }
+                    })
+                    // appending the server prefix to each image
+                    let nonCodingImageUrl = doc.nonCodingImages.map(item => {
+                        return {
+                            cutHeatmap:imageURL+item.cutHeatmap,
+                            sutHeatmap:imageURL+item.sutHeatmap,
+                            xutHeatmap:imageURL+item.xutHeatmap,
+                            cutEnrichedHeatmap:imageURL+item.cutEnrichedHeatmap,
+                            sutEnrichedHeatmap:imageURL+item.sutEnrichedHeatmap,
+                            xutEnrichedHeatmap:imageURL+item.xutEnrichedHeatmap,
+                            trnaHeatmap:imageURL+item.trnaHeatmap,
+                            arsHeatmap:imageURL+item.arsHeatmap,
+                            xelementHeatmap:imageURL+item.xelementHeatmap,
+                            centromereHeatmap:imageURL+item.centromereHeatmap,
+                        }
+                    })
+                    // appending the server prefix to each image
+                    let motifImageUrl = doc.motifImages.map(item => {
+                        return {
+                            motif1Logo:imageURL+item.motif1Logo,
+                            motif1LogoReverse: imageURL+item.motif1LogoReverse,
+                            motif1FourColor: imageURL+item.motif1FourColor,
+                            motif1Composite: imageURL+item.motif1Composite,
+                            motif1Heatmap:imageURL+item.motif1Heatmap,
+                            motif2Logo:imageURL+item.motif2Logo,
+                            motif2LogoReverse: imageURL+item.motif2LogoReverse,
+                            motif2FourColor: imageURL+item.motif2FourColor,
+                            motif2Composite: imageURL+item.motif2Composite,
+                            motif2Heatmap:imageURL+item.motif2Heatmap,
+                            motif3Logo:imageURL+item.motif3Logo,
+                            motif3LogoReverse: imageURL+item.motif3LogoReverse,
+                            motif3FourColor: imageURL+item.motif3FourColor,
+                            motif3Composite: imageURL+item.motif3Composite,
+                            motif3Heatmap:imageURL+item.motif3Heatmap,
+                            
+                        }
+                    })
+                            
+        
+                        return {
+                            _id : doc._id,
+                            isPublic:doc.isPublic, 
+                            featureName: doc.featureName,
+                            standardGeneName: doc.standardGeneName,
+                            commonName: doc.commonName,
+                            sgdId: doc.sgdId,
+                            alias: doc.alias,
+                            description: doc.description,
+                            featureType: doc.featureType,
+                            featureQualifier: doc.featureQualifier,
+                            isMergedReplicate: doc.isMergedReplicate,
+                            sampleId : doc.sampleId,
+                            runId : doc.runId,
+                            genome : doc.genome,
+                            assayType : doc.assayType,
+                            peaks : doc.peaks,
+                            motifCount : doc.motifCount,
+                            epitopeTag : doc.epitopeTag,
+                            treatments : doc.treatments,
+                            growthMedia : doc.growthMedia,
+                            antibody : doc.antibody,                            
+                            totalReads : doc.totalReads,                            
+                            mappedReads : doc.mappedReads,
+                            mappedReadPercent: doc.mappedReadPercent,
+                            uniquelyMappedReads:doc.uniquelyMappedReads,
+                            uniquelyMappedPercent : doc.uniquelyMappedPercent,
+                            dedupUniquelyMappedReads : doc.dedupUniquelyMappedReads,
+                            deduplicatedPercent : doc.deduplicatedPercent, 
+                            codingImages: codingImageUrl,
+                            nonCodingImages: nonCodingImageUrl,
+                            motifImages: motifImageUrl,
+                            request:{
+                                type : 'GET',
+                                url:  getURL + doc._id
+                            }
+                            // doc: doc
+                        }
+                    }) ,
+                request : {
+                    type : 'GET',
+                    description: 'Get all the products',
+                    url:  getURL 
+                }
+            });
+        }
+        // send the 404 message
+        else{
+            res.status(404).json({
+                message : "Not Found a Valid Entry",
+                page : "You display a search page or not found page"
+            });
+        }                
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json({error: err});
+    });
+});
+
+router.post('/:sampleId', (req, res, next) =>{
+    res.status(201).json({
+        message : 'Handling POST requests to /samples/:sampleId',
+        Info : 'Posted Sample, under construction'
+    });
+});
+
+
+// Edit the Samples using mongoose id
+router.get('/edit/:sampleId', (req, res, next) =>{
+    const sampleId =  req.params.sampleId.toUpperCase();
+    Sample.find({'_id':sampleId})
     // .select('sampleId standardGeneName assayType')
     .exec()
     .then(docs => {

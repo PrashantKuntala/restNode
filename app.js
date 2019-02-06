@@ -7,6 +7,9 @@ const morgan = require('morgan');
 // adding body-parser
 const bodyParser = require('body-parser');
 
+// adding cors header for Access-Control-Allow-Origin
+const cors = require('cors');
+
 // adding helmet for security
 const helmet = require('helmet');
 
@@ -18,16 +21,18 @@ mongoose.connect('mongodb://localhost/restTest',{ useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 
 // adding (middle-ware)response headers to handle CORS
-app.use((req,res,next)=> {
-    res.header('Access-Control-Allow-Origin','*');
-    res.header('Access-Control-Allow-Headers','Origin, X-Requested-With,Content-Type,Accept,Authorization');
-    if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Methods','PUT, POST, PATCH, DELETE, GET');
-        res.status(200).json({});
-    }
-    next();
-});
+// app.use((req,res,next)=> {
+//     res.header('Access-Control-Allow-Origin','*');
+//     res.header('Access-Control-Allow-Headers','Origin, X-Requested-With,Content-Type,Accept,Authorization');
+//     if (req.method === 'OPTIONS') {
+//         res.header('Access-Control-Allow-Methods','PUT, POST, PATCH, DELETE, GET');
+//         res.status(200).json({});
+//     }
+//     next();
+// });
 
+// enable cors
+app.use(cors());
 
 // add routes
 const sampleRoutes = require('./routes/samples');

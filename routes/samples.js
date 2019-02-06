@@ -6,10 +6,13 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
+// load the configuration
+const Config = require('../config.json');
+
 // requiring the samples model
 const Sample = require('../models/sampleModel');
-const getURL = 'http://172.29.0.74:8080/samples/';
-const imageURL = 'http://172.29.0.74:8080/images/';
+const getURL = Config.publicEndpoint;
+const imageURL = Config.imageURL;
 
 // GET all samples
 router.get('/', (req, res, next) =>{

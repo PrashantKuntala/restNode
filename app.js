@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 
+// retrieve the configuration
+const Config = require(__dirname + '/config.json');
+
 // adding loggin middleware
 const morgan = require('morgan');
 
@@ -17,7 +20,7 @@ const helmet = require('helmet');
 const mongoose = require('mongoose');
 
 // connecting to mongodb using mongoclient 
-mongoose.connect('mongodb://localhost/restTest',{ useNewUrlParser: true });
+mongoose.connect('mongodb://localhost/'+Config.monogodbName,{ useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 
 // adding (middle-ware)response headers to handle CORS
@@ -39,7 +42,7 @@ const sampleRoutes = require('./routes/samples');
 const reviewSampleRoutes = require('./routes/reviewSamples');
 
 // adding static resources 
-app.use('/images',express.static('/Users/pxk284/Desktop/yepWebsite/images'));
+app.use('/images',express.static(Config.datasetPath));
 
 // adding helmet
 app.use(helmet());
@@ -74,5 +77,5 @@ app.use((error,req,res,next)=>{
 });
 
 //listen to port
-app.listen(8080);
-console.log('Listening on port 8080');
+app.listen(Config.port);
+console.log('Listening on port ' + Config.port);

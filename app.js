@@ -29,6 +29,7 @@ app.use(cors());
 // add routes
 const sampleRoutes = require('./routes/samples');
 const reviewSampleRoutes = require('./routes/reviewSamples');
+const sgdAliases = require('./routes/sgdAliases');
 
 // adding static resources 
 app.use('/images',express.static(Config.datasetPath));
@@ -46,6 +47,7 @@ app.use(bodyParser.json());
 // let express use the specific routes
 app.use('/samples',sampleRoutes);
 app.use('/reviewSamples',reviewSampleRoutes);
+app.use('/aliases',sgdAliases);
 
 
 // handling default route errors

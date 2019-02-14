@@ -30,6 +30,7 @@ app.use(cors());
 const sampleRoutes = require('./routes/samples');
 const reviewSampleRoutes = require('./routes/reviewSamples');
 const sgdAliases = require('./routes/sgdAliases');
+const sgdInfo = require('./routes/sgdInfo');
 
 // adding static resources 
 app.use('/images',express.static(Config.datasetPath));
@@ -48,6 +49,7 @@ app.use(bodyParser.json());
 app.use('/samples',sampleRoutes);
 app.use('/reviewSamples',reviewSampleRoutes);
 app.use('/aliases',sgdAliases);
+app.use('/sgdInfo',sgdInfo);
 
 
 // handling default route errors

@@ -32,6 +32,8 @@ const sampleSchema = mongoose.Schema({
     uniquelyMappedPercent : {type:String, required : true},
     dedupUniquelyMappedReads : {type:String, required : true},   
     deduplicatedPercent : {type:String, required : true},
+    project: {type:String, required : true},
+    author: {type:String, required : true},
     codingImages: [{
         allFeaturesHeatmap: String,
         allFeaturesColorbar: String,

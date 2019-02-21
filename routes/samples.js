@@ -149,6 +149,8 @@ router.get('/', (req, res, next) =>{
 router.get('/:proteinName', (req, res, next) =>{
     const proteinName =  req.params.proteinName.toUpperCase();
     Sample.find({'standardGeneName':proteinName, "isPublic" :  true })
+    // return results in the reverse sort order 
+    .sort({treatments: -1})
     // .select('sampleId standardGeneName assayType')
     .exec()
     .then(docs => {

@@ -269,8 +269,8 @@ router.post('/', (req, res, next) =>{
 router.get('/:proteinName', (req, res, next) =>{
     const proteinName =  req.params.proteinName.toUpperCase();
     Sample.find({'standardGeneName':proteinName})
-    // return results in the reverse sort order 
-    .sort({treatments: -1})
+    // return results in the reverse sort order of treatments , ascending order on sampleid
+    .sort({treatments: -1, sampleId: 1})
     // .select('sampleId standardGeneName assayType')
     .exec()
     .then(docs => {

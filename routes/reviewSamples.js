@@ -572,7 +572,7 @@ router.patch('/:sampleId', (req, res, next) =>{
     // console.log(updateOps);
     
     // updating the data
-    Sample.update({_id : id}, { $set : updateOps})
+    Sample.updateOne({_id : id}, { $set : updateOps})
     .exec()
     .then(result => {
         console.log(result);
@@ -591,7 +591,7 @@ router.patch('/:sampleId', (req, res, next) =>{
 
 router.delete('/:sampleId', (req, res, next) =>{
     const id = req.params.sampleId;
-    Sample.remove({_id : id})
+    Sample.deleteOne({_id : id})
     .exec()
     .then(result=>{
         console.log(result);        

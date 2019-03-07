@@ -4,5 +4,6 @@
     "publicEndpoint" : "http://172.29.0.74:8080/samples/",
     "privateEndpoint" : "http://172.29.0.74:8080/reviewSamples/",
     "imageURL" : "http://172.29.0.74:8080/images/",
-    "port" : 8080
+    "port" : 8080,
+    "JWT_KEY" : "abf$8$6q"
 }

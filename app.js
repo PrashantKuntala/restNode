@@ -19,6 +19,12 @@ const helmet = require('helmet');
 // adding mongoose ORM for mongodb
 const mongoose = require('mongoose');
 
+// To handle all deprication warnings from mongoose
+// https://mongoosejs.com/docs/deprecations.html
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+
 // connecting to mongodb using mongoclient 
 mongoose.connect('mongodb://localhost/'+Config.monogodbName,{ useNewUrlParser: true });
 mongoose.Promise = global.Promise;
@@ -31,6 +37,7 @@ const sampleRoutes = require('./routes/samples');
 const reviewSampleRoutes = require('./routes/reviewSamples');
 const sgdAliases = require('./routes/sgdAliases');
 const sgdInfo = require('./routes/sgdInfo');
+const userRoutes = require('./routes/user');
 
 // adding static resources 
 app.use('/images',express.static(Config.datasetPath));
@@ -50,7 +57,7 @@ app.use('/samples',sampleRoutes);
 app.use('/reviewSamples',reviewSampleRoutes);
 app.use('/aliases',sgdAliases);
 app.use('/sgdInfo',sgdInfo);
-
+app.use('/user',userRoutes);
 
 // handling default route errors
 app.use((req,res,next) => {

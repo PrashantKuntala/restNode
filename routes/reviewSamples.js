@@ -10,9 +10,11 @@ const Sample = require('../models/sampleModel');
 const getURL = Config.privateEndpoint;
 const imageURL = Config.imageURL;
 
+// load the authentication middleware
+const checkAuth = require('../middleware/checkAuth');
 
 // GET all samples
-router.get('/', (req, res, next) =>{
+router.get('/', checkAuth, (req, res, next) =>{
     Sample.find()
     // .select('sampleId sampleName assayType') // returns only those field names from db
     .exec()
@@ -143,7 +145,7 @@ router.get('/', (req, res, next) =>{
 // Post all samples ( this is handling one sample now), 
 // maybe you need to use map if there is more than one sample
 // remember the user doesn't send the id
-router.post('/', (req, res, next) =>{
+router.post('/', checkAuth, (req, res, next) =>{
    
     // creating a new object for sample
     const sample = new Sample({
@@ -266,7 +268,7 @@ router.post('/', (req, res, next) =>{
 // HTTP verbs for individual proteins
 //  Need to implement commonname and alias based searches too, could be done on the front end.
 //  to hash out the corresponding standardGeneName for the alias before making the request.
-router.get('/:proteinName', (req, res, next) =>{
+router.get('/:proteinName', checkAuth, (req, res, next) =>{
     const proteinName =  req.params.proteinName.toUpperCase();
     Sample.find({'standardGeneName':proteinName})
     // return results in the reverse sort order of treatments , ascending order on sampleid
@@ -412,7 +414,7 @@ router.post('/:sampleId', (req, res, next) =>{
 
 
 // Edit the Samples using mongoose id
-router.get('/edit/:sampleId', (req, res, next) =>{
+router.get('/edit/:sampleId', checkAuth, (req, res, next) =>{
     const sampleId =  req.params.sampleId.toUpperCase();
     Sample.find({'_id':sampleId})
     // .select('sampleId standardGeneName assayType')
@@ -547,13 +549,6 @@ router.get('/edit/:sampleId', (req, res, next) =>{
     });
 });
 
-router.post('/:sampleId', (req, res, next) =>{
-    res.status(201).json({
-        message : 'Handling POST requests to /samples/:sampleId',
-        Info : 'Posted Sample, under construction'
-    });
-});
-
 // the request body for the path needs to be in this form, an Array
 
 // [
@@ -562,7 +557,7 @@ router.post('/:sampleId', (req, res, next) =>{
 // 	}
 // ]
 
-router.patch('/:sampleId', (req, res, next) =>{
+router.patch('/:sampleId', checkAuth, (req, res, next) =>{
     const id = req.params.sampleId;
     const updateOps = {};
     // change only the key value pairs that need to be changed
@@ -589,7 +584,7 @@ router.patch('/:sampleId', (req, res, next) =>{
     });
 });
 
-router.delete('/:sampleId', (req, res, next) =>{
+router.delete('/:sampleId', checkAuth, (req, res, next) =>{
     const id = req.params.sampleId;
     Sample.deleteOne({_id : id})
     .exec()

@@ -7,11 +7,16 @@ const jwt = require("jsonwebtoken");
 // retrieve the configuration
 const Config = require('../config.json');
 
+// requiring the user model
 const User = require("../models/userModel");
+
+// load the authentication middleware
+const checkAuth = require('../middleware/checkAuth');
 
 // route for the user signup
 router.post("/signup", (req, res, next) => {
-    // checking if a user with the email exists
+  
+  // checking if a user with the email exists
   User.find({ email: req.body.email })
     .exec()
     .then(user => {
@@ -20,6 +25,7 @@ router.post("/signup", (req, res, next) => {
           message: "E-Mail exists"
         });
       } else {
+
         //   creating a hash of the password
         bcrypt.hash(req.body.password, 10, (err, hash) => {
           if (err) {
@@ -32,6 +38,7 @@ router.post("/signup", (req, res, next) => {
               email: req.body.email,
               password: hash
             });
+            
             //  creating the new user
             user
               .save()
@@ -98,8 +105,57 @@ router.post("/login", (req, res, next) => {
       });
   });
 
+// route to retrive all existing users
+router.get('/', checkAuth, (req, res, next) =>{
+  User.find()  
+    .exec()
+    .then(docs => {
+        console.log(docs);
+        const response = {
+            count : docs.length,
+            users : docs.map(doc => { 
+                return {
+                    _id : doc._id,
+                    email: doc.email,
+                    password:doc.password
+                }
+            })            
+        }
+        res.status(200).json(response);        
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json({
+            error : err
+        });        
+    });   
+}); 
+
+// Update user roles and details
+router.patch('/:userId', checkAuth, (req, res, next) =>{
+    const id = req.params.userId;
+    const updateOps = {};
+    // change only the key value pairs that need to be changed
+    for (let ops of req.body){
+        updateOps[ops.propName] = ops.value;
+    }
+    // console.log(updateOps);
+    
+    // updating the data
+    User.updateOne({_id : id}, { $set : updateOps})
+    .exec()
+    .then(result => {
+        console.log(result);
+        res.status(200).json({
+            message: 'User Updated',
+            sample : result,                      
+        });      
+    }).catch(err => {
+        error : err
+    });
+});
+
 // route to delete a user
-router.delete("/:userId", (req, res, next) => {
+router.delete("/:userId", checkAuth, (req, res, next) => {
   User.deleteOne({ _id: req.params.userId })
     .exec()
     .then(result => {

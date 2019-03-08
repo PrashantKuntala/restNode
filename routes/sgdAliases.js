@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 // requiring the samples model
 const Sample = require('../models/sampleModel');
 
+// load the authentication middleware
+const checkAuth = require('../middleware/checkAuth');
+
 // get all aliases and corresponding standard gene names for public samples
 router.get('/public', (req, res, next) =>{
    
@@ -56,7 +59,7 @@ router.get('/public', (req, res, next) =>{
 
 
 // get all aliases and corresponding standard gene names for private samples
-router.get('/private', (req, res, next) =>{
+router.get('/private', checkAuth, (req, res, next) =>{
    
     Sample.find({"isPublic" :  false })
     .select('standardGeneName alias')

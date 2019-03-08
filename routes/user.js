@@ -36,7 +36,9 @@ router.post("/signup", (req, res, next) => {
             const user = new User({
               _id: new mongoose.Types.ObjectId(),
               email: req.body.email,
-              password: hash
+              username: req.body.username,
+              password: hash,
+              role: req.body.role
             });
             
             //  creating the new user
@@ -117,6 +119,7 @@ router.get('/', checkAuth, (req, res, next) =>{
                 return {
                     _id : doc._id,
                     email: doc.email,
+                    username:doc.username,
                     password:doc.password
                 }
             })            
